@@ -1,11 +1,14 @@
+
+import Hero from "./components/heroSection/Hero";
+import Nav from "./components/navbar/Nav";
+import Players from "./components/players/Players";
+
 const App = () => {
-  
-  return (
-    <>
-    <div className="text-6xl
-    ">hello world</div>
-    </>
-  )
-}
+  return <>
+  <Nav/>
+  <Hero/>
+  <Players/>
+  </>;
+};
 
 export default App;
