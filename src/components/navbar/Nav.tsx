@@ -8,10 +8,10 @@ const Nav = () => {
             </div>
             <div className="flex gap-10 items-center ">
                 <ul className=" flex gap-10 ">
-                    <li className="cursor-pointer hover:text-black text-shadow font-normal] transition-all">Home</li>
-                    <li className="cursor-pointer hover:text-black text-shadow font-normal] transition-all">Fixture</li>
-                    <li className="cursor-pointer hover:text-black text-shadow font-normal] transition-all">Teams</li>
-                    <li className="cursor-pointer hover:text-black text-shadow font-normal] transition-all">Schedules</li>
+                    <li className="cursor-pointer hover:text-black text-shadow font-normal] transition-all"><a href="#">Home</a></li>
+                    <li className="cursor-pointer hover:text-black text-shadow font-normal] transition-all"><a href="#">Fixture</a></li>
+                    <li className="cursor-pointer hover:text-black text-shadow font-normal] transition-all"><a href="#">Teams</a></li>
+                    <li className="cursor-pointer hover:text-black text-shadow font-normal] transition-all"><a href="#">Schedules</a></li>
                 </ul>
                 <button className="btn">Coin $</button>
             </div>

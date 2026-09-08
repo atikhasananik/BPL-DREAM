@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+.btn{
+    outline: none;
+    box-shadow: none;
+    font-weight: normal;
+}
