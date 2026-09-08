@@ -1,12 +1,34 @@
 import { FaFlag, FaUserAlt } from "react-icons/fa";
 import type { IplayerType } from "../../type";
-
+import { useState, type Dispatch, type SetStateAction } from "react";
 
 export interface IPlayerCardProps {
   player: IplayerType;
+  selected: IplayerType[];
+  setSelected: Dispatch<SetStateAction<IplayerType[]>>;
 }
 
-const PlayerCard = ({ player }: IPlayerCardProps) => {
+const PlayerCard = ({ player, selected, setSelected }: IPlayerCardProps) => {
+
+  const [isClicked,setIsclicked] = useState<boolean>(false)
+
+  const handaleChoosePlayer = () => {
+    
+
+    const exist = selected.find((p) => {
+      return player.id===p.id;
+    });
+
+    
+    if (!exist) {
+      const newSetPlayers = [...selected,player];
+      console.log(newSetPlayers)
+      setSelected(newSetPlayers)
+      setIsclicked(true)
+    }
+
+  };
+
   return (
     <>
       <div className=" my-5 overflow-hidden rounded-2xl shadow-xl hover:shadow-[#13131339] transition-all p-5 border border-[#9090902f] ">
@@ -14,7 +36,6 @@ const PlayerCard = ({ player }: IPlayerCardProps) => {
           <img
             className="  h-full w-full object-cover object-top"
             src={player.image}
-            
           />
         </div>
 
@@ -28,8 +49,7 @@ const PlayerCard = ({ player }: IPlayerCardProps) => {
             <div className="flex items-center justify-between">
               <div className="text-gray-400 flex items-center gap-2 font-normal text-xl">
                 <p className="">
-                 <FaFlag />
-
+                  <FaFlag />
                 </p>
                 <p>{player.region}</p>
               </div>
@@ -52,7 +72,9 @@ const PlayerCard = ({ player }: IPlayerCardProps) => {
 
             <div className="font-semibold flex items-center justify-between ">
               <p>Price: ${player.price}</p>
-              <button className="btn">Choose Player</button>
+              <button  onClick={() => handaleChoosePlayer()} className={`btn ${isClicked?"bg-yellow-300":''}`}>
+                {isClicked?"selected":"Choose Player"}
+              </button>
             </div>
           </div>
         </div>

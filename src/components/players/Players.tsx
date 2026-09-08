@@ -1,6 +1,8 @@
-import { use } from "react";
+import { use, useState } from "react";
 import type { IplayerType } from "../../type";
-import PlayerCard from "./PlayerCard";
+
+import AvailablePlayers from "./AvailablePlayers";
+import SelectedPlayers from "./SelectedPlayers";
 
 export interface IPlayersProps {
   data: Promise<IplayerType[]>;
@@ -8,27 +10,34 @@ export interface IPlayersProps {
 
 const IPlayers = ({ data }: IPlayersProps) => {
   const playersData = use(data);
+  const [isClicked,setIsclicked] = useState<"Available"|"Selected">("Available")
+  const [selected,setSelected] = useState<IplayerType[]>([])
+
+  const handelIsclickedBtn = (value:"Available"|"Selected"):void => {
+    setIsclicked(value)
+    
+    
+  }
+
 
   return (
     <>
       <div className="container mx-auto   ">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl ">Available Player</h2>
+          <h2 className="text-2xl ">{isClicked==="Available"?"Available":"Selected"} Player</h2>
 
           <div>
-            <button className="btn px-9 text-lg py-6 border-r-0 rounded-r-none bg-amber-300">
+            <button onClick={()=>handelIsclickedBtn("Available")} className={`btn px-9 text-lg py-6 border-r-0 rounded-r-none ${isClicked==="Available"?"bg-yellow-300":''}`}>
               Available
             </button>
-            <button className="btn px-9 text-lg py-6 border-l-0 rounded-l-none">
+            <button onClick={()=>handelIsclickedBtn("Selected")} className={`btn px-9 text-lg py-6 border-l-0 rounded-l-none ${isClicked==="Selected"?"bg-yellow-300":''}`}>
               Selected
             </button>
           </div>
         </div>
-
-        <div className="grid grid-cols-4 gap-6">
-          {playersData.map((player: IplayerType) => {
-            return <PlayerCard key={player.id} player={player} />;
-          })}
+        
+        <div>
+          {isClicked==="Available"?<AvailablePlayers selected={selected} setSelected={setSelected}  playersData={playersData} />:<SelectedPlayers Selected={selected} setSelected={setSelected}  />}
         </div>
       </div>
     </>
