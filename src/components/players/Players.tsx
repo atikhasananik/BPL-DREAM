@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { use, useState, type Dispatch, type SetStateAction } from "react";
 import type { IplayerType } from "../../type";
 
 import AvailablePlayers from "./AvailablePlayers";
@@ -6,9 +6,11 @@ import SelectedPlayers from "./SelectedPlayers";
 
 export interface IPlayersProps {
   data: Promise<IplayerType[]>;
+  coin:number;
+  setCoin: Dispatch<SetStateAction<number>>;
 }
 
-const IPlayers = ({ data }: IPlayersProps) => {
+const IPlayers = ({ data ,coin,setCoin }: IPlayersProps) => {
   const playersData = use(data);
   const [isClicked,setIsclicked] = useState<"Available"|"Selected">("Available")
   const [selected,setSelected] = useState<IplayerType[]>([])
@@ -37,7 +39,7 @@ const IPlayers = ({ data }: IPlayersProps) => {
         </div>
         
         <div>
-          {isClicked==="Available"?<AvailablePlayers selected={selected} setSelected={setSelected}  playersData={playersData} />:<SelectedPlayers Selected={selected} setSelected={setSelected}  />}
+          {isClicked==="Available"?<AvailablePlayers coin={coin} setCoin={setCoin}  selected={selected} setSelected={setSelected}  playersData={playersData} />:<SelectedPlayers Selected={selected} setSelected={setSelected}  />}
         </div>
       </div>
     </>

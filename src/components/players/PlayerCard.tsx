@@ -1,32 +1,46 @@
 import { FaFlag, FaUserAlt } from "react-icons/fa";
 import type { IplayerType } from "../../type";
 import { useState, type Dispatch, type SetStateAction } from "react";
+import { toast } from "react-toastify";
 
 export interface IPlayerCardProps {
   player: IplayerType;
   selected: IplayerType[];
   setSelected: Dispatch<SetStateAction<IplayerType[]>>;
+  coin: number;
+  setCoin: Dispatch<SetStateAction<number>>;
 }
 
-const PlayerCard = ({ player, selected, setSelected }: IPlayerCardProps) => {
-
-  const [isClicked,setIsclicked] = useState<boolean>(false)
+const PlayerCard = ({
+  player,
+  selected,
+  setSelected,
+  coin,
+  setCoin,
+}: IPlayerCardProps) => {
+  const [isClicked, setIsclicked] = useState<boolean>(false);
 
   const handaleChoosePlayer = () => {
-    
-
     const exist = selected.find((p) => {
-      return player.id===p.id;
+      return player.id === p.id;
     });
+    const showErrMass = () => {
+      return toast.error("not enough money");
+    };
+    const showSussMass = () => {
+      return toast.success("Successfuly purcess player!");
+    };
 
-    
-    if (!exist) {
-      const newSetPlayers = [...selected,player];
-      console.log(newSetPlayers)
-      setSelected(newSetPlayers)
-      setIsclicked(true)
+    if (!exist && coin >= player.price) {
+      const newSetPlayers = [...selected, player];
+      console.log(newSetPlayers);
+      setSelected(newSetPlayers);
+      setIsclicked(true);
+      setCoin(coin - player.price);
+      showSussMass();
+    } else {
+      showErrMass();
     }
-
   };
 
   return (
@@ -72,8 +86,11 @@ const PlayerCard = ({ player, selected, setSelected }: IPlayerCardProps) => {
 
             <div className="font-semibold flex items-center justify-between ">
               <p>Price: ${player.price}</p>
-              <button  onClick={() => handaleChoosePlayer()} className={`btn ${isClicked?"bg-yellow-300":''}`}>
-                {isClicked?"selected":"Choose Player"}
+              <button
+                onClick={() => handaleChoosePlayer()}
+                className={`btn ${isClicked ? "bg-yellow-300" : ""}`}
+              >
+                {isClicked ? "selected" : "Choose Player"}
               </button>
             </div>
           </div>

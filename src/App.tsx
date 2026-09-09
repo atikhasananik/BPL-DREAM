@@ -4,6 +4,7 @@ import Nav from "./components/navbar/Nav";
 import Players from "./components/players/Players";
 import type { IplayerType } from "./type";
 import PlayerSkeleton from "./components/skeleton/PlayerSkeleton";
+import { ToastContainer } from "react-toastify";
 
 async function playersData(): Promise<IplayerType[]> {
   const res = await fetch("/playerData.json");
@@ -13,14 +14,22 @@ async function playersData(): Promise<IplayerType[]> {
 
 const App = () => {
   const [data] = useState(() => playersData());
+  const [coin,setCoin] = useState<number>(100000000);
+
+ 
+
+  
+
+
   return (
     <>
+    <ToastContainer />
     <div className="w-full scrollbar-none">
 
-      <Nav />
-      <Hero />
+      <Nav coin={coin}/>
+      <Hero setCoin={setCoin} />
       <Suspense fallback={<PlayerSkeleton />}>
-        <Players data={data} />
+        <Players coin={coin} setCoin={setCoin} data={data} />
       </Suspense>
     </div>
     </>
