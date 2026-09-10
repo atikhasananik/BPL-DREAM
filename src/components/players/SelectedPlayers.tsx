@@ -1,6 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { IplayerType } from "../../type";
-import PlayerCard from "./PlayerCard";
 
 export interface SelectedPlayersProps {
   Selected: IplayerType[];
@@ -30,9 +29,7 @@ const SelectedPlayers = ({
       setSelected(newSelectedPlayers);
       setCoin(coin + player.price);
       showSussMass("Delete Successful");
-    }else(
-      showErrMass("Coudn't find id from Selected player...")
-    )
+    } else showErrMass("Coudn't find id from Selected player...");
   };
 
   return (
