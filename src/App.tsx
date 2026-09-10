@@ -27,7 +27,7 @@ const App = () => {
     <div className="w-full scrollbar-none">
 
       <Nav coin={coin}/>
-      <Hero setCoin={setCoin} />
+      <Hero setCoin={setCoin} coin={coin} />
       <Suspense fallback={<PlayerSkeleton />}>
         <Players coin={coin} setCoin={setCoin} data={data} />
       </Suspense>

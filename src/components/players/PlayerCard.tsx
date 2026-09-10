@@ -1,7 +1,6 @@
 import { FaFlag, FaUserAlt } from "react-icons/fa";
 import type { IplayerType } from "../../type";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { toast } from "react-toastify";
 
 export interface IPlayerCardProps {
   player: IplayerType;
@@ -9,6 +8,8 @@ export interface IPlayerCardProps {
   setSelected: Dispatch<SetStateAction<IplayerType[]>>;
   coin: number;
   setCoin: Dispatch<SetStateAction<number>>;
+  showErrMass: (mass: string) => {};
+  showSussMass: (mass: string) => {};
 }
 
 const PlayerCard = ({
@@ -17,6 +18,8 @@ const PlayerCard = ({
   setSelected,
   coin,
   setCoin,
+  showErrMass,
+  showSussMass,
 }: IPlayerCardProps) => {
   const [isClicked, setIsclicked] = useState<boolean>(false);
 
@@ -24,12 +27,6 @@ const PlayerCard = ({
     const exist = selected.find((p) => {
       return player.id === p.id;
     });
-    const showErrMass = () => {
-      return toast.error("not enough money");
-    };
-    const showSussMass = () => {
-      return toast.success("Successfuly purcess player!");
-    };
 
     if (!exist && coin >= player.price) {
       const newSetPlayers = [...selected, player];
@@ -37,9 +34,9 @@ const PlayerCard = ({
       setSelected(newSetPlayers);
       setIsclicked(true);
       setCoin(coin - player.price);
-      showSussMass();
+      showSussMass("Successfuly purcess player!");
     } else {
-      showErrMass();
+      showErrMass("Not enough money...");
     }
   };
 

@@ -3,6 +3,7 @@ import type { IplayerType } from "../../type";
 
 import AvailablePlayers from "./AvailablePlayers";
 import SelectedPlayers from "./SelectedPlayers";
+import { Bounce, toast } from "react-toastify";
 
 export interface IPlayersProps {
   data: Promise<IplayerType[]>;
@@ -12,6 +13,24 @@ export interface IPlayersProps {
 
 const IPlayers = ({ data ,coin,setCoin }: IPlayersProps) => {
   const playersData = use(data);
+
+  const showErrMass = (mass:string) => {
+      return toast.error(mass);
+    };
+    const showSussMass = (mass:string) => {
+      return toast.success(mass, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    };
+
   const [isClicked,setIsclicked] = useState<"Available"|"Selected">("Available")
   const [selected,setSelected] = useState<IplayerType[]>([])
 
@@ -38,8 +57,8 @@ const IPlayers = ({ data ,coin,setCoin }: IPlayersProps) => {
           </div>
         </div>
         
-        <div>
-          {isClicked==="Available"?<AvailablePlayers coin={coin} setCoin={setCoin}  selected={selected} setSelected={setSelected}  playersData={playersData} />:<SelectedPlayers Selected={selected} setSelected={setSelected}  />}
+        <div  >
+          {isClicked==="Available"?<AvailablePlayers  showErrMass={showErrMass} showSussMass ={showSussMass} coin={coin} setCoin={setCoin}  selected={selected} setSelected={setSelected}  playersData={playersData} />:<SelectedPlayers showErrMass={showErrMass} showSussMass ={showSussMass} coin={coin} setCoin={setCoin} Selected={selected} setSelected={setSelected}  />}
         </div>
       </div>
     </>
